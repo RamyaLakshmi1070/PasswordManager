@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PasswordService {
-  private apiUrl = 'https://localhost:7105/api/PackageManager';
+  private apiUrl = 'https://localhost:7105/api/PasswordManager';
 
   constructor(private http: HttpClient) {}
 

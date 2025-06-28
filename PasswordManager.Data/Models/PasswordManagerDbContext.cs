@@ -20,14 +20,15 @@ public partial class PasswordManagerDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var builder = new ConfigurationBuilder()
-                      .SetBasePath(Directory.GetCurrentDirectory())
-                      .AddJsonFile("appsettings.json");
-        var config = builder.Build();//have ascension to json
-        var connectionString = config.GetConnectionString("QuickKartDBConnectionString");
-
+        
         if (!optionsBuilder.IsConfigured)
         {
+            var builder = new ConfigurationBuilder()
+                      .SetBasePath(Directory.GetCurrentDirectory())
+                      .AddJsonFile("appsettings.json");
+            var config = builder.Build();//have ascension to json
+            var connectionString = config.GetConnectionString("QuickKartDBConnectionString");
+
             // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
             optionsBuilder.UseSqlServer(connectionString);
         }

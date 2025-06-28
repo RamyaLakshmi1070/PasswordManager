@@ -6,11 +6,11 @@ namespace PasswordManager.App.Controllers;
 
     [Route("api/[controller]")]
     [ApiController]
-    public class PackageManager : ControllerBase
+    public class PasswordManager : ControllerBase
     {
         private readonly PasswordManagerRepository passwordManagerRepository;
 
-        public PackageManager(PasswordManagerRepository passwordManagerRepository)
+        public PasswordManager(PasswordManagerRepository passwordManagerRepository)
         {
             this.passwordManagerRepository = passwordManagerRepository;
         }
