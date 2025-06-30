@@ -66,6 +66,41 @@ This is the backend API for the Personal Password Manager project. It provides s
 /PasswordManager.Test
 ├── PasswordManagerRepositoryTests.cs  # In-memory tests covering CRUD & encrypt/decrypt
 └── PasswordManager.Test.csproj
+---
+
+#Backend execution via locally:
+
+Step 1 Prerequisites: Please install all the below application
+
+NET 6 SDK or later
+
+[SQL Server (Local or Docker)]
+
+Docker Desktop
+
+Visual Studio 2022 (Optional but preferred)
+
+Step 2: Open ssms:
+Execute the below command in your sql server management studio
+
+create database PasswordManagerDb;
+CREATE TABLE Passwords (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Category NVARCHAR(100),
+    App NVARCHAR(100),
+    UserName NVARCHAR(150),
+    EncryptedPassword NVARCHAR(MAX)
+);
+
+Step 3: Update the appsetting.json with below code:
+
+"ConnectionStrings": {
+  "PasswordManagerDbConnectionString": "data source=(localdb)\\MSSQLLocalDB;initial catalog=PasswordManagerDb;Integrated Security=true"
+}
+
+Step 4: Open Visual studio , right click on PasswordManager.APP --> set as start up project.
+
+Step 5: Execute the application . Now swagger will be poped up. 
 
 ---
 # Personal Password Manager - Frontend Application
