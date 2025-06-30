@@ -38,6 +38,36 @@ This is the backend API for the Personal Password Manager project. It provides s
 | DELETE | /passwords/{id}     | Delete a password record                            |
 
 ---
+#Backend Code Structure:
+
+## API Structure 
+/PasswordManager.API
+├── Controllers/
+│   └── PasswordsController.cs     # API endpoints (CRUD + decrypt)
+├── Program.cs                     # App startup, DI, CORS, Swagger
+├── appsettings.json               # Connection strings & logging
+├── Dockerfile                     # Container build configuration
+├── docker-compose.yml            # Orchestration with SQL Server  
+└── PasswordManager.API.csproj     # Project file
+
+## Data and Repository Layer
+
+/PasswordManager.Data
+├── Models/                        # EF Core database models (scaffolded)
+│   └── PasswordManagerDbContext.cs
+├── Repository/
+│   └── PasswordManagerRepository.cs  # CRUD and encryption logic
+├── Helper/
+│   └── PasswordEncryptionHelper.cs   # Base64 encrypt/decrypt
+└── PasswordManager.Data.csproj    # Project file
+
+## Xunit 
+
+/PasswordManager.Test
+├── PasswordManagerRepositoryTests.cs  # In-memory tests covering CRUD & encrypt/decrypt
+└── PasswordManager.Test.csproj
+
+---
 # Personal Password Manager - Frontend Application
 
 ## Overview
@@ -51,7 +81,7 @@ This is the frontend application for the Personal Password Manager project. It p
 - Angular 15
 - TypeScript
 - Angular CLI
-- Bootstrap 5
+- Bootstrap 5S
 - angular-notifier (for toast notifications)
 - RxJS & HTTPClient for API calls
 
@@ -79,4 +109,21 @@ This is the frontend application for the Personal Password Manager project. It p
 - On "Delete", a confirmation prompt appears before making a DELETE request.
 - Clicking "+" shows an empty row to add a new password using a POST request.
 - All actions show success or error messages via toast notifications.
+
+## Frontend Code Structure
+
+/PasswordManager.Frontend
+├── src/
+│   ├── app/
+│   │   ├── password.component.ts      # UI logic (table, CRUD, validation)
+│   │   ├── password.component.html    # Table layout and inline editing
+│   │   ├── password.component.css     # Component-specific styles
+│   │   └── password.service.ts        # HTTP calls to backend API
+│   ├── environments/
+│   │   └── environment.ts            # API URL configuration
+│   └── index.html, main.ts, styles.css etc.
+├── angular.json                     # Angular CLI config
+├── package.json                     # Dependencies & scripts
+└── tsconfig.json                    # TypeScript configuration
+
 
