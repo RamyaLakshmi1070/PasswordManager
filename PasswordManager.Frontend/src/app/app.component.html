@@ -1,5 +1,13 @@
 <div class="container mt-4">
   <h2 class="mb-3">🔐 Personal Password Manager</h2>
+  <div *ngIf="notificationMessage" class="alert" 
+     [ngClass]="{
+       'alert-success': notificationType === 'success',
+       'alert-danger': notificationType === 'error'
+     }" 
+     role="alert">
+  {{ notificationMessage }}
+</div>
 
   <table class="table table-bordered table-hover">
     <thead class="table-dark">

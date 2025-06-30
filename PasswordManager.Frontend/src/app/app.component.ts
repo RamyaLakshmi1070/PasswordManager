@@ -14,6 +14,9 @@ export class AppComponent implements OnInit {
   decryptedId: number | null = null;
   decryptedPassword: string = '';
   editedPassword: string = '';
+  notificationMessage: string = '';
+  notificationType: 'success' | 'error' | '' = '';
+
 
   addMode: boolean = false;
   newPassword: any = {
@@ -35,7 +38,7 @@ export class AppComponent implements OnInit {
   loadPasswords(): void {
     this.passwordService.getAll().subscribe({
       next: (res) => this.passwords = res,
-      error: () => this.toastr.notify('error','Failed to load passwords')
+      error: () => this.showNotification('Failed to load passwords','error')
     });
   }
 
@@ -44,13 +47,24 @@ export class AppComponent implements OnInit {
     next: (response) => {
       this.decryptedId = item.id;
       this.decryptedPassword = response.encryptedPassword; 
-      this.toastr.notify('success', 'Password has been decrypted');
+      this.showNotification('Password has been decrypted');
     },
     error: () => {
-      this.toastr.notify('error', 'Failed to decrypt password');
+      this.showNotification( 'Failed to decrypt password','error');
     }
   });
 }
+
+showNotification(message: string, type: 'success' | 'error' = 'success') {
+  this.notificationMessage = message;
+  this.notificationType = type;
+
+  setTimeout(() => {
+    this.notificationMessage = '';
+    this.notificationType = '';
+  }, 3000); 
+}
+
 
   edit(item: Password): void {
     this.editId = item.id;
@@ -65,7 +79,7 @@ export class AppComponent implements OnInit {
 
   save(item: Password): void {
     if (!item.app || !item.category || !item.userName || !this.editedPassword) {
-      this.toastr.notify('warning','All fields are required');
+       this.showNotification( 'All fields are required','error');
       return;
     }
 
@@ -76,11 +90,11 @@ export class AppComponent implements OnInit {
 
     this.passwordService.update(item.id, updated).subscribe({
       next: () => {
-        this.toastr.notify('success','Password updated successfully');
+        this.showNotification( 'Password updated successfully');
         this.editId = null;
         this.loadPasswords();
       },
-      error: () => this.toastr.notify('error','Failed to update password')
+      error: () => this.showNotification('Failed to update password','error')
     });
   }
 
@@ -88,10 +102,10 @@ export class AppComponent implements OnInit {
     if (confirm('Are you sure you want to delete this password?')) {
       this.passwordService.delete(item.id).subscribe({
         next: () => {
-          this.toastr.notify('success','Password deleted');
+          this.showNotification('Password deleted');
           this.loadPasswords();
         },
-        error: () => this.toastr.notify('error','Failed to delete password')
+        error: () => this.showNotification('Failed to delete password','error')
       });
     }
   }
@@ -114,7 +128,7 @@ export class AppComponent implements OnInit {
   saveNewPassword(): void {
     const { app, category, userName, plainPassword } = this.newPassword;
     if (!app || !category || !userName || !plainPassword) {
-      this.toastr.notify('warning','All fields are required');
+      this.showNotification('All fields are required','error');
       return;
     }
 
@@ -128,11 +142,11 @@ export class AppComponent implements OnInit {
 
     this.passwordService.add(newItem).subscribe({
       next: () => {
-        this.toastr.notify('success','Password added');
+        this.showNotification('Password added');
         this.addMode = false;
         this.loadPasswords();
       },
-      error: () => this.toastr.notify('error','Failed to add password')
+      error: () => this.showNotification('Failed to add password','error')
     });
   }
 }
