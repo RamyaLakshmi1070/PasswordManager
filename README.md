@@ -126,4 +126,15 @@ This is the frontend application for the Personal Password Manager project. It p
 ├── package.json                     # Dependencies & scripts
 └── tsconfig.json                    # TypeScript configuration
 
+## Frontend Executing steps:
+
+Prerequisites
+Download Node.js and npm
+Install angular using node command prompt by below command:
+npm install -g @angular/cli
+Navigate to frontend folder; cd PasswordManager.Frontend
+Run ng serve in node command prompt
+
+
+
 
